@@ -16,32 +16,42 @@ void readList(list<int> &l)
     }
 }
 
-void sortListASC(list<int> &l)
+void sortListASC(list<int> &l1, list<int> &l2, list<int> &l3)
 {
-    for (list<int>::iterator i = l.begin(); i != l.end(); i++)
-    {
-        for (list<int>::iterator j = i; j != l.end(); j++)
-        {
-            if (*i > *j)
-            {
-                int aux = *i;
-                *i = *j;
-                *j = aux;
-            }
-        }
-    }
-}
+    list<int>::iterator it1 = l1.begin();
+    list<int>::iterator it2 = l2.begin();
 
-bool findInList(list<int> lista, int x)
-{
-    for (list<int>::iterator i = lista.begin(); i != lista.end(); i++)
+    while (it1 != l1.end() && it2 != l2.end())
     {
-        if (*i == x)
+        if (*it1 < *it2)
         {
-            return true;
+            l3.push_back(*it1);
+            it1++;
+        }
+        else if (*it1 > *it2)
+        {
+            l3.push_back(*it2);
+            it2++;
+        }
+        else
+        {
+            l3.push_back(*it1);
+            it1++;
+            it2++;
         }
     }
-    return false;
+
+    while (it1 != l1.end())
+    {
+        l3.push_back(*it1);
+        it1++;
+    }
+
+    while (it2 != l2.end())
+    {
+        l3.push_back(*it2);
+        it2++;
+    }
 }
 
 void cleanList(list<int> &l)
@@ -57,24 +67,13 @@ int main()
     readList(l1);
     readList(l2);
 
-    l3.merge(l1);
-
-    for (list<int>::iterator i = l2.begin(); i != l2.end(); i++)
-    {
-        if (!findInList(l3, *i))
-        {
-            l3.push_back(*i);
-        }
-    }
-
-    sortListASC(l3);
+    sortListASC(l1, l2, l3);
 
     for (list<int>::iterator i = l3.begin(); i != l3.end(); i++)
     {
         cout << *i << " ";
     }
 
-    
     cleanList(l1);
     cleanList(l2);
     cleanList(l3);
